@@ -1,0 +1,1 @@
+﻿global using OOP_Exercise1.Codes;
