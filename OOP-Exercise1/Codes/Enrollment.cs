@@ -14,4 +14,10 @@ internal class Enrollment
         StudentInfo = studentInfo;
         CourseInfo = courseInfo;
     }
+
+    public Enrollment()
+    {
+
+    }
+    public List<Enrollment> Enrollments { get; set; } = new();
 }
