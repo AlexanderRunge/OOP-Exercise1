@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOP_Exercise1.Codes
+namespace OOP_Exercise1.Codes;
+
+internal struct AgeConverter
 {
-    internal struct AgeConverter
+    public static double GetAge(DateTime dateOfBirth)
     {
-        public static double GetAge(DateTime dateOfBirth)
-        {
-            return Math.Round((DateTime.Now - dateOfBirth).TotalDays, 0);
-        }
+        return Math.Round((DateTime.Now - dateOfBirth).TotalDays, 0);
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOP_Exercise1.Codes;
 
-sealed class Student : Person
+internal sealed class Student : Person
 {
     public int? StudentID { get; set; }
     public Student(int studentID, string? firstName, string? lastName, DateTime dateOfBirth) : base(firstName, lastName, dateOfBirth)

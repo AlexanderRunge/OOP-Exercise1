@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOP_Exercise1.Codes;
 
-abstract class Person
+internal abstract class Person
 {
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
