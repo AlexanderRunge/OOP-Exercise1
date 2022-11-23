@@ -12,4 +12,23 @@ internal sealed class Teacher : Person
     {
         Department = department;
     }
+    public string returnDepartment()
+    {
+        return Department;
+    }
+    public override List<string> GetAllCourses(Enrollment enrollment)
+    {
+        List<string> Courses = new();
+        foreach (var item in enrollment.Enrollments)
+        {
+            if (item.CourseInfo.TeacherInfo.FirstName == FirstName)
+            {
+                if (!Courses.Contains(item.CourseInfo.CourseName))
+                {
+                    Courses.Add(item.CourseInfo.CourseName);
+                }
+            }
+        }
+        return Courses;
+    }
 }

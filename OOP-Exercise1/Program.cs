@@ -10,7 +10,8 @@ Course Studieteknik = new Course("Studieteknik", Niels);
 Course Grundprog = new Course("Grundprog", Niels);
 Course OOP = new Course("OOP", Niels);
 
-List<Enrollment> enrollments = new()
+Enrollment enrollmentList = new Enrollment();
+enrollmentList.Enrollments = new List<Enrollment>()
 {
     new Enrollment(Alexander, Studieteknik),
     new Enrollment(Alexander, Grundprog),
@@ -24,10 +25,26 @@ List<Enrollment> enrollments = new()
     new Enrollment(Ozan, Grundprog),
     new Enrollment(Ozan, OOP),
     new Enrollment(Camilla, Grundprog),
-    new Enrollment(Camilla, OOP)
+    new Enrollment(Camilla, OOP),
 };
 
-foreach (var enrollment in enrollments)
+Console.WriteLine("alexander's courses:");
+foreach (var course in Alexander.GetAllCourses(enrollmentList))
 {
-    Console.WriteLine($"{enrollment.StudentInfo.FirstName} {enrollment.StudentInfo.LastName}, fag: {enrollment.CourseInfo.CourseName}, lærer: {enrollment.CourseInfo.TeacherInfo.FirstName} {enrollment.CourseInfo.TeacherInfo.LastName}");
+    Console.WriteLine(course);
 }
+Console.WriteLine("Niels");
+foreach (var course in Niels.GetAllCourses(enrollmentList))
+{
+    Console.WriteLine(course);
+}
+
+Console.WriteLine(Alexander.returnFullName());
+Console.WriteLine(Niels.returnFullName());
+
+foreach (var enrollment in enrollmentList.Enrollments)
+{
+    Console.WriteLine($"{enrollment.StudentInfo.FirstName} {enrollment.StudentInfo.LastName}, fag: {enrollment.CourseInfo.CourseName}, " +
+                      $"lærer: {enrollment.CourseInfo.TeacherInfo.FirstName} {enrollment.CourseInfo.TeacherInfo.LastName}");
+}
+

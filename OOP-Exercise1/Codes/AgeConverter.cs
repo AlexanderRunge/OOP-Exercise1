@@ -10,6 +10,6 @@ internal struct AgeConverter
 {
     public static double GetAge(DateTime dateOfBirth)
     {
-        return Math.Round((DateTime.Now - dateOfBirth).TotalDays, 0);
+        return Math.Round((DateTime.Now - dateOfBirth).TotalDays / 365.25, 2);
     }
 }

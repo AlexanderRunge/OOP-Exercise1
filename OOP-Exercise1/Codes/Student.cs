@@ -13,4 +13,25 @@ internal sealed class Student : Person
     {
         StudentID = studentID;
     }
+
+    public override List<string> GetAllCourses(Enrollment enrollment)
+    {
+        List<string> Courses = new();
+        foreach (var item in enrollment.Enrollments)
+        {
+            if (item.StudentInfo.StudentID == StudentID)
+            {
+                if (!Courses.Contains(item.CourseInfo.CourseName))
+                {
+                    Courses.Add(item.CourseInfo.CourseName);
+                }
+            }
+        }
+        return Courses;
+    }
+
+    public override string returnFullName()
+    {
+        return FirstName + " " + LastName;
+    }
 }

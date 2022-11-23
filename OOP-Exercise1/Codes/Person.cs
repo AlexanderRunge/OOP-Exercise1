@@ -11,6 +11,7 @@ internal abstract class Person
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public DateTime _DateOfBirth { get; set; }
+
     public DateTime DateOfBirth
     {
         get { return _DateOfBirth; }
@@ -20,11 +21,25 @@ internal abstract class Person
             Age = (int)AgeConverter.GetAge(_DateOfBirth);
         }
     }
+
     public int Age { get; set; }
+
     public Person(string? firstName, string? lastName, DateTime dateOfBirth)
     {
         FirstName = firstName;
         LastName = lastName;
         DateOfBirth = dateOfBirth;
     }
+
+    public int returnAge()
+    {
+        return Age;
+    }
+
+    public virtual string returnFullName()
+    {
+        return LastName + ", " + FirstName;
+    }
+
+    public abstract List<String> GetAllCourses(Enrollment enrollment);
 }
