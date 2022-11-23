@@ -4,11 +4,13 @@ Student Dennis = new Student(3, "Dennis", "Daniel B. Paaske", new DateTime(1981,
 Student Ozan = new Student(4, "Ozan", "Korkmaz", new DateTime(1990, 10, 24));
 Student Camilla = new Student(5, "Camilla", "Kløjgaard", new DateTime(1999, 3, 10));
 
+
 Teacher Niels = new Teacher("Programmering", "Niels", "Olesen", new DateTime(1972, 9, 11));
 
 Course Studieteknik = new Course("Studieteknik", Niels);
 Course Grundprog = new Course("Grundprog", Niels);
 Course OOP = new Course("OOP", Niels);
+
 
 Enrollment enrollmentList = new Enrollment();
 enrollmentList.Enrollments = new List<Enrollment>()
