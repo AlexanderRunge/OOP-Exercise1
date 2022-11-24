@@ -31,4 +31,23 @@ internal sealed class Teacher : Person
         }
         return Courses;
     }
+
+    public override List<string> GetAllCourses(List<Enrollment> enrollmentList)
+    {
+        List<string> Courses = new();
+        foreach (var enrollment in enrollmentList)
+        {
+            foreach (var item in enrollment.Enrollments)
+            {
+                if (item.CourseInfo.TeacherInfo.FirstName == FirstName)
+                {
+                    if (!Courses.Contains(item.CourseInfo.CourseName))
+                    {
+                        Courses.Add(item.CourseInfo.CourseName);
+                    }
+                }
+            }
+        }
+        return Courses;
+    }
 }

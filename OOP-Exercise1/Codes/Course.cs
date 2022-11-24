@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,5 +16,32 @@ internal class Course
     {
         CourseName = courseName;
         TeacherInfo = teacherInfo;
+    }
+    public List<string> GetAllStudents(Enrollment enrollment)
+    {
+        List<string> Students = new();
+        foreach (var item in enrollment.Enrollments)
+        {
+            if (item.CourseInfo.CourseName == CourseName)
+            {
+                string student = $"{item.StudentInfo.FirstName} {item.StudentInfo.LastName}";
+                if (!Students.Contains(student))
+                {
+                    Students.Add(student);
+                }
+            }
+        }
+        return Students;
+    }
+    public void CourseStudentAmount(List<string> Students)
+    {
+        if (Students.Count < 8)
+        {
+            throw new Exception("Faget har mindre en 8 studenter");
+        }
+        else if (Students.Count > 16)
+        {
+            throw new Exception("Faget har mere en 16 studenter");
+        }
     }
 }

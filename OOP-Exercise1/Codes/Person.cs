@@ -42,4 +42,5 @@ internal abstract class Person
     }
 
     public abstract List<String> GetAllCourses(Enrollment enrollment);
+    public abstract List<String> GetAllCourses(List<Enrollment> enrollment);
 }
