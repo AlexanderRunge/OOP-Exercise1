@@ -33,15 +33,16 @@ internal class Course
         }
         return Students;
     }
-    public void CourseStudentAmount(List<string> Students)
+    public void CourseStudentAmount(Enrollment enrollment)
     {
+        List<string> Students = GetAllStudents(enrollment);
         if (Students.Count < 8)
         {
-            throw new Exception("Faget har mindre en 8 studenter");
+            throw new Exception($"{CourseName} har mindre en 8 studenter");
         }
         else if (Students.Count > 16)
         {
-            throw new Exception("Faget har mere en 16 studenter");
+            throw new Exception($"{CourseName} har mere en 16 studenter");
         }
     }
 }
