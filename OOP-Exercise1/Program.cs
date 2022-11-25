@@ -1,46 +1,137 @@
-﻿using Enum = OOP_Exercise1.Codes.Enum;
+﻿using System.Net.NetworkInformation;
+using EnumCourses = OOP_Exercise1.Codes.EnumCourses;
 
-Student Alexander = new Student(1, "Alexander", "K. H. Runge", new DateTime(2005, 5, 2));
-Student Amanda = new Student(2, "Amanda", "Elisabeth Vang Gudmand", new DateTime(1999, 6, 2));
-Student Dennis = new Student(3, "Dennis", "Daniel B. Paaske", new DateTime(1981, 1, 22));
-Student Ozan = new Student(4, "Ozan", "Korkmaz", new DateTime(1990, 10, 24));
-Student Camilla = new Student(5, "Camilla", "Kløjgaard", new DateTime(1999, 3, 10));
-Student Rune = new Student(6, "Rune", "Hansen", new DateTime(1999, 3, 10));
-Student Sanjit = new Student(7, "Sanjit", "Pouden", new DateTime(1999, 3, 10));
-Student Rasmus = new Student(8, "Rasmus", "Wiell", new DateTime(1999, 3, 10));
+Teacher Niels = new("Programmering", "Niels", "Olesen", new DateTime(1972, 9, 11));
 
-Teacher Peter = new Teacher("Programmering", "Peter", "Lindenskov", new DateTime(1970, 1, 1));
-Teacher Niels = new Teacher("Programmering", "Niels", "Olesen", new DateTime(1972, 9, 11));
+Course Studieteknik = new(Courses.Studieteknik.ToString(), Niels);
+Course Grundprog = new(Courses.Grundprog.ToString(), Niels);
+Course OOP = new(Courses.OOP.ToString(), Niels);
 
-Course Studieteknik = new Course(Courses.Studieteknik.ToString(), Niels);
-Course Grundprog = new Course(Courses.Grundprog.ToString(), Niels);
-Course OOP = new Course(Courses.OOP.ToString(), Niels);
-
-
-
-Enrollment enrollmentList = new Enrollment();
-enrollmentList.Enrollments = new List<Enrollment>()
+Enrollment enrollmentList = new()
 {
-    new Enrollment(Alexander, Studieteknik),
-    new Enrollment(Alexander, Grundprog),
-    new Enrollment(Alexander, OOP),
-    new Enrollment(Amanda, Studieteknik),
-    new Enrollment(Amanda, Grundprog),
-    new Enrollment(Amanda, OOP),
-    new Enrollment(Dennis, Studieteknik),
-    new Enrollment(Dennis, Grundprog),
-    new Enrollment(Dennis, OOP),
-    new Enrollment(Ozan, Grundprog),
-    new Enrollment(Ozan, OOP),
-    new Enrollment(Camilla, Grundprog),
-    new Enrollment(Camilla, OOP),
-    new Enrollment(Rune, Grundprog),
-    new Enrollment(Sanjit, Grundprog),
-    new Enrollment(Rasmus, Grundprog),
-
+    Enrollments = new List<Enrollment>() {}
 };
 
+List<Courses> coursesList = Enum.GetValues(typeof(Courses)).Cast<Courses>().ToList();
 
+var addStudentCheck = true;
+do
+{
+    var idCheck = true;
+    var studentid = new int();
+    do
+    {
+        try
+        {
+            Console.Write("Angiv elevens id: ");
+            studentid = Convert.ToInt32(Console.ReadLine());
+            idCheck = false;
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Der skete en fejl. Prøv igen!");
+        }
+    } while (idCheck);
+
+    Console.Write("Angiv elevens fornavn: ");
+    var firstname = Console.ReadLine();
+    Console.Write("Angiv elevens efternavn: ");
+    var lastname = Console.ReadLine();
+
+    var dateCheck = true;
+    var dateofbirth = new DateTime();
+    do
+    {
+        try
+        {
+            Console.Write("Angiv elevens fødselsdag (Format: (dag)/(måned)/(år) ex. 20/9/1994): ");
+            var dateInString = Console.ReadLine();
+            if (string.IsNullOrEmpty(dateInString))
+            {
+                throw new Exception();
+            }
+            dateofbirth = new(Convert.ToInt32(dateInString.Split("/")[2]),
+                Convert.ToInt32(dateInString.Split("/")[1]), Convert.ToInt32(dateInString.Split("/")[0]));
+            dateCheck = false;
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Der skete en fejl. Prøv igen!");
+        }
+    } while (dateCheck);
+
+    Student student = new(studentid, firstname, lastname, dateofbirth);
+    var courseCheck = true;
+    do
+    {
+        Console.WriteLine($"Angiv fag (vælg fra følgende fag):\n{string.Join("\n", coursesList)}\n");
+        var fag = Console.ReadLine();
+        if (string.IsNullOrEmpty(fag))
+        {
+            Console.WriteLine("Du skrev ikke noget");
+        }
+        else if (fag.ToLower() == Courses.Studieteknik.ToString().ToLower())
+        {
+            enrollmentList.Enrollments.Add(new Enrollment(student, Studieteknik));
+            courseCheck = false;
+        }
+        else if (fag.ToLower() == Courses.Grundprog.ToString().ToLower())
+        {
+            enrollmentList.Enrollments.Add(new Enrollment(student, Grundprog));
+            courseCheck = false;
+        }
+        else if (fag.ToLower() == Courses.OOP.ToString().ToLower())
+        {
+            enrollmentList.Enrollments.Add(new Enrollment(student, OOP));
+            courseCheck = false;
+        }
+        else
+        {
+            Console.WriteLine("Du skrev ikke et rigtig fag");
+        }
+    } while (courseCheck);
+
+    foreach (var enrollment in enrollmentList.Enrollments)
+    {
+        Console.WriteLine($"{enrollment.StudentInfo.FirstName} {enrollment.StudentInfo.LastName}, fag: {enrollment.CourseInfo.CourseName}, " +
+                          $"lærer: {enrollment.CourseInfo.TeacherInfo.FirstName} {enrollment.CourseInfo.TeacherInfo.LastName}");
+    }
+
+    Console.Write("Vil du tilføje flere elever? Skriv ja eller nej : ");
+    var continueCheck = Console.ReadLine();
+    var answerCheck = true;
+    do
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(continueCheck))
+            {
+                throw new Exception();
+            }
+
+            if (continueCheck.ToLower() == "ja")
+            {
+                Console.Clear();
+                Console.WriteLine("Fortsætter");
+                answerCheck = false;
+            }
+            else if (continueCheck.ToLower() == "nej")
+            {
+                Console.WriteLine("Stopper...");
+                answerCheck = false;
+                addStudentCheck = false;
+            }
+            else
+            {
+                Console.WriteLine("Der skete en fejl. Prøv igen");
+            }
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Der skete en fejl. Prøv igen!");
+        }
+    } while (answerCheck);
+} while (addStudentCheck);
 //Console.WriteLine("alexander's courses:");
 //foreach (var course in Alexander.GetAllCourses(enrollmentList))
 //{
@@ -52,16 +143,16 @@ enrollmentList.Enrollments = new List<Enrollment>()
 //    Console.WriteLine(course);
 //}
 
-enrollmentList.Enrollments.Sort();
+//enrollmentList.Enrollments.Sort();
 
-try
-{
-    Grundprog.CourseStudentAmount(enrollmentList);
-}
-catch (Exception exp)
-{
-    Console.WriteLine(exp.Message);
-}
+//try
+//{
+//    Grundprog.CourseStudentAmount(enrollmentList);
+//}
+//catch (Exception exp)
+//{
+//    Console.WriteLine(exp.Message);
+//}
 
 
 //foreach (var enrollment in enrollmentList.Enrollments)

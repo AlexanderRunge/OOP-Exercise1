@@ -21,9 +21,12 @@ internal sealed class Student : Person
         {
             if (item.StudentInfo.StudentID == StudentID)
             {
-                if (!Courses.Contains(item.CourseInfo.CourseName))
+                if (!string.IsNullOrEmpty(item.CourseInfo.CourseName))
                 {
-                    Courses.Add(item.CourseInfo.CourseName);
+                    if (!Courses.Contains(item.CourseInfo.CourseName))
+                    {
+                        Courses.Add(item.CourseInfo.CourseName);
+                    }
                 }
             }
         }
@@ -38,9 +41,12 @@ internal sealed class Student : Person
             {
                 if (item.StudentInfo.StudentID == StudentID)
                 {
-                    if (!Courses.Contains(item.CourseInfo.CourseName))
+                    if (!string.IsNullOrEmpty(item.CourseInfo.CourseName))
                     {
-                        Courses.Add(item.CourseInfo.CourseName);
+                        if (!Courses.Contains(item.CourseInfo.CourseName))
+                        {
+                            Courses.Add(item.CourseInfo.CourseName);
+                        }
                     }
                 }
             }
